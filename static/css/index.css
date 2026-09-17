@@ -27,6 +27,11 @@ body {
   color: #e0662a;
 }
 
+.pointzero-rainbow {
+  font-variant: normal;
+  white-space: nowrap;
+}
+
 .teaser .hero-body {
   padding-top: 0;
   padding-bottom: 3rem;

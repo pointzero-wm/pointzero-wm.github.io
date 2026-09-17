@@ -5,10 +5,7 @@
   'use strict';
   var root = document.getElementById('dataset-gallery');
   if (!root) return;
-  root.innerHTML =
-    '<div class="dg-grid"></div>' +
-    '<p class="dg-note">Sixteen episodes sampled from the 2.9 M-frame synthetic set &mdash; each clip is a real training sequence, looped. ' +
-    'Every frame also carries dense 3D point tracks; those are what the model is trained to complete.</p>';
+  root.innerHTML = '<div class="dg-grid"></div>';
   var grid = root.querySelector('.dg-grid');
 
   fetch('static/dataset/manifest.json?v=' + Date.now()).then(function (r) { return r.json(); })

@@ -15,8 +15,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css?v=29">
+  <link rel="stylesheet" href="static/css/index.css?v=30">
   <link rel="stylesheet" href="static/css/charts_extra.css?v=1">
+  <link rel="stylesheet" href="static/css/ablation.css?v=2">
   <link rel="stylesheet" href="static/css/method_extra.css?v=3">
   <link rel="stylesheet" href="static/css/glossary.css?v=1">
   <link rel="stylesheet" href="static/css/hero_extra.css?v=3">
@@ -93,10 +94,8 @@
   <div class="container is-max-widescreen">
     <div class="hero-body">
       <div id="hero-viewer" data-pz-viewer="pre"></div>
-      <p class="pz-note">Live in-browser playback of PointZero's predictions. Orange marks the conditioning tracks.</p>
       <h2 class="subtitle has-text-centered section-tagline">
-        <span class="pointzero">PointZero</span> learns transferable 3D dynamics by completing 3D point tracks and without any robot action labels.
-        Above: live predictions on real scenes, zero-shot &mdash; no fine-tuning, no robot data.
+        <span class="pointzero pointzero-rainbow"><span style="color:#00649c">P</span><span style="color:#0048b8">o</span><span style="color:#002cd4">i</span><span style="color:#000ff0">n</span><span style="color:#1300ec">t</span><span style="color:#3d00c2">Z</span><span style="color:#670098">e</span><span style="color:#91006e">r</span><span style="color:#bf0040">o</span></span> learns transferable 3D dynamics by completing 3D point tracks and without any robot action labels.
       </h2>
     </div>
   </div>
@@ -110,23 +109,24 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            World models endow perceptual systems with the ability to predict how scenes evolve under interaction.
-            They are most beneficial when trained on diverse volumes of data, to instill a rich prior into downstream
-            applications. Existing methods for capturing <i>3D world models</i> are typically scene-specific dynamics
-            models, or require robot action labels &mdash; which excludes web video data from the training pool.
-            We study <i>3D point track completion</i> as a pre-training objective for learning transferable 3D dynamics
-            without robot data. Given a single RGB-D observation and sparse partial 3D trajectories (tracks), we predict
-            future 3D tracks of all observed points. We show this objective provides a rich dynamics prior, without
-            requiring robot action labels. We contribute a diverse dataset of 2.9 million synthetic frames spanning
-            deformable, articulated, and rigid objects, and use it to train PointZero. We show that a flexible and
-            expressive transformer, PointZero, outperforms prior methods on the same data. We demonstrate the utility
-            of our pre-training objective by fine-tuning PointZero for two downstream applications:
-            (1) action-conditioned dynamics and (2) robot manipulation. When fine-tuned to condition on end-effector
-            pose, PointZero outperforms the baselines on a recent action-conditioned 3D dynamics benchmark. When
-            fine-tuned to predict robot actions, PointZero outperforms or matches the baselines on 6/7 simulated and
-            real-world robot manipulation tasks. We furthermore evaluate training PointZero from scratch to isolate the
-            benefits of our proposed architecture from those of our proposed pre-training objective and dataset.
-            We release the dataset, model checkpoints, and full training recipe.
+            World models endow perceptual systems with the ability to predict how scenes evolve under
+            interaction. They are most beneficial when trained on diverse volumes of data, to instill a rich
+            prior into downstream applications. Existing methods typically require robot action labels to
+            learn action-conditioned 3D dynamics, which excludes web video data from the training pool. We
+            study 3D point track completion as a pre-training objective for learning transferable 3D dynamics
+            without robot data. Given a single RGB-D observation and sparse partial 3D trajectories (tracks),
+            we predict future 3D tracks of all observed points. We show this objective produces a rich 3D
+            dynamics prior, without requiring robot action labels. We contribute a diverse dataset of 2.9
+            million synthetic frames spanning deformable, articulated, and rigid objects, and use it to train
+            PointZero. We show that a flexible and expressive transformer, PointZero, outperforms prior
+            methods on the same data. We demonstrate the utility of our pre-training objective by
+            post-training PointZero for two downstream applications: (1) action-conditioned 3D dynamics
+            prediction and (2) imitation learning. When fine-tuned to condition on end-effector pose,
+            PointZero outperforms the baselines on the recent PGND 3D dynamics benchmark. When fine-tuned to
+            predict robot actions and 3D tracks, PointZero outperforms or matches the baselines on 6/7
+            simulated and real-world robot manipulation tasks. We furthermore evaluate training PointZero from
+            scratch to isolate the benefits of our proposed architecture from those of our proposed
+            pre-training objective and dataset. We release the dataset, checkpoints, and full training recipe.
           </p>
         </div>
       </div>
@@ -144,8 +144,8 @@
           <p>
             PointZero takes in a single RGB-D image and a small number of complete point tracks, and predicts dense 3D
             point trajectories for <i>all</i> observed scene points. The architecture combines a Perceiver-IO visual
-            encoder over DINOv2 features with a denoising transformer that alternates point-level and global attention. We train it
-            with a JiT-style x-prediction objective. Because both the labels and the conditioning are just 3D
+            encoder over DINOv2 features with a denoising transformer that alternates point-level and global attention.
+            Because both the labels and the conditioning are just 3D
             point tracks &mdash; available from simulation, and in principle from any video via point tracking &mdash;
             supervision is robot-free and interaction-agnostic. We can then fine-tune the same model to condition on
             robot end-effector pose, or to predict robot action chunks in addition to point tracks.
@@ -248,7 +248,7 @@
         <h2 class="title is-3">Action-conditioned dynamics prediction</h2>
         <div class="content has-text-justified">
           <p>
-            Post-trained to condition on robot end-effector state, PointZero convincingly outperforms strong scene-specific
+            Post-trained to condition on robot end-effector state, PointZero outperforms strong scene-specific
             baselines on 4 of 6 real robot&ndash;object interaction scenes in the PGND benchmark. Pre-training is critical:
             the identical architecture, trained from scratch (PointZero-Scratch), falls far behind.
           </p>
@@ -339,6 +339,44 @@
     </div>
   </div>
 </section>
+<!-- ===================== Pre-training ablations: Tables 4 and 5 ===================== -->
+<section class="section ablation-section" id="pretraining-ablation" aria-labelledby="ablation-title">
+  <div class="container is-max-desktop">
+    <h2 class="title is-4" id="ablation-title">Pre-training ablation</h2>
+    <p class="ablation-setup" id="ablation-setup">Success (%) with 20 labeled demos per task, no extra videos, and 1,000 rollouts per task.</p>
+    <div class="ablation-grid">
+      <div class="ablation-panel">
+        <table class="ablation-table" aria-describedby="ablation-setup ablation-note">
+            <caption>With downstream track supervision <span>(Table 4)</span></caption>
+            <thead><tr><th scope="col">Task</th><th scope="col">Scratch</th><th scope="col">Pretrained</th></tr></thead>
+            <tbody>
+                  <tr><th scope="row">Blockstack</th><td><strong>93.5</strong></td><td>93.2</td></tr>
+                  <tr><th scope="row">Microwave</th><td>81.4</td><td><strong>91.9</strong></td></tr>
+                  <tr><th scope="row">Glass</th><td>66.6</td><td><strong>79.5</strong></td></tr>
+            </tbody>
+            <tfoot>
+                  <tr><th scope="row">Average</th><td>80.5</td><td><strong>88.2</strong></td></tr>
+            </tfoot>
+          </table>
+      </div>
+      <div class="ablation-panel">
+        <table class="ablation-table" aria-describedby="ablation-setup ablation-note">
+            <caption>Without downstream track supervision <span>(Table 5)</span></caption>
+            <thead><tr><th scope="col">Task</th><th scope="col">Scratch</th><th scope="col">Pretrained</th></tr></thead>
+            <tbody>
+                  <tr><th scope="row">Blockstack</th><td>83.8</td><td><strong>85.2</strong></td></tr>
+                  <tr><th scope="row">Microwave</th><td>89.5</td><td><strong>90.1</strong></td></tr>
+                  <tr><th scope="row">Glass</th><td>49.1</td><td><strong>64.6</strong></td></tr>
+            </tbody>
+            <tfoot>
+                  <tr><th scope="row">Average</th><td>74.1</td><td><strong>80.0</strong></td></tr>
+            </tfoot>
+          </table>
+      </div>
+    </div>
+    <p class="ablation-note" id="ablation-note">Table 4 trains all parameters. Table 5 freezes the pretrained point-processing stream; scratch trains the full model.</p>
+  </div>
+</section>
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
@@ -346,8 +384,8 @@
         <h2 class="title is-3">Sampling diverse dynamics</h2>
         <div class="content has-text-justified">
           <p>
-            The JiT objective learns to sample from a <i>distribution</i> of point trajectories given a single RGB-D observation. 
-            Here we show how different seeds produce plausible yet diverse dynamics. 
+            The JiT/FM objectives learn to sample from a <i>distribution</i> of point trajectories given a single RGB-D observation.
+            Here we show how different seeds produce plausible yet diverse dynamics.
             With the same input and conditioning track, different random seeds predict different motions of the notebook.
           </p>
         </div>
@@ -393,10 +431,10 @@
 
 <script src="static/js/three.min.js"></script>
 <script src="static/js/hero.js?v=33"></script>
-<script src="static/js/method.js?v=24"></script>
-<script src="static/js/multimodal.js?v=7"></script>
+<script src="static/js/method.js?v=25"></script>
+<script src="static/js/multimodal.js?v=8"></script>
 <script src="static/js/charts.js?v=4"></script>
 <script src="static/js/glossary.js?v=2"></script>
-<script src="static/js/gallery.js?v=4"></script>
+<script src="static/js/gallery.js?v=5"></script>
 </body>
 </html>

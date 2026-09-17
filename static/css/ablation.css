@@ -1,0 +1,27 @@
+/* Native paper tables stay separate from the three generated benchmark charts. */
+.ablation-section { padding-top: 1.5rem; padding-bottom: 1.5rem; scroll-margin-top: 24px; }
+.ablation-section > .container { max-width: 900px !important; }
+.ablation-section #ablation-title { margin-bottom: 0.65rem; text-align: center; }
+.ablation-setup, .ablation-note { color: #626b79; font-size: 0.83rem; line-height: 1.5; }
+.ablation-setup { text-align: center; margin: 0 0 1.1rem; }
+.ablation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+.ablation-panel { min-width: 0; }
+.ablation-table { width: 100%; border-collapse: collapse; color: #394352; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.ablation-table caption { padding-bottom: 0.5rem; text-align: left; color: #283240; font-weight: 600; font-size: 0.9rem; }
+.ablation-table caption span { color: #626b79; font-weight: 400; white-space: nowrap; }
+.ablation-table th, .ablation-table td { padding: 0.4rem 0.35rem; vertical-align: middle; }
+.ablation-table th:not([align]), .ablation-table td:not([align]) { text-align: right; }
+.ablation-table th:first-child:not([align]) { padding-left: 0; text-align: left; }
+.ablation-table th:last-child, .ablation-table td:last-child { padding-right: 0; }
+.ablation-table thead { border-bottom: 1px solid #dce0e6; color: #626b79; font-size: 0.8rem; }
+.ablation-table th { font-weight: 500; }
+.ablation-table tbody tr + tr { border-top: 1px solid #f0f1f3; }
+.ablation-table strong { font-weight: 700; color: #283240; }
+.ablation-table tfoot { border-top: 1px solid #dce0e6; }
+.ablation-table tfoot th { font-weight: 600; }
+.ablation-table tfoot td:last-child strong { color: #ad4214; }
+.ablation-note { margin: 0.8rem 0 0; }
+@media screen and (max-width: 760px) {
+  .ablation-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+  .ablation-setup { text-align: left; }
+}

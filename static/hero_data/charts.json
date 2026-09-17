@@ -14,7 +14,7 @@
   ],
   "unit": "error (lower is better)",
   "facet": true,
-  "note": "We train all baselines on our dataset with identical inputs. Errors are in centimetres. The PointZero-JiT-mean-10 bars show the mean error over 10 sampled predictions. The table also includes flow-matching, regression and best-of-10 oracle ablations. Each panel has its own scale — rigid-object errors are an order of magnitude larger, so cross-panel bar lengths are not comparable.",
+  "note": "We train all baselines on our dataset with identical inputs. Errors are in centimetres. The PointZero-JiT-mean-10 bars show the mean error over 10 sampled predictions. The table also includes flow-matching, regression and best-of-10 oracle ablations.",
   "series": [
    {
     "name": "GBND",

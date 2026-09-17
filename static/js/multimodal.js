@@ -193,7 +193,7 @@
 
     var labels = [];
     for (var s = 0; s < man.n_var; s++) labels.push({ t: 'sample ' + (s + 1), v: s, u: false });
-    labels.push({ t: 'where they disagree', v: 0, u: true });
+    labels.push({ t: 'Final-position spread', v: 0, u: true });
     labels.forEach(function (L) {
       var cell = document.createElement('figure');
       cell.className = 'mm-cell' + (L.u ? ' is-unc' : '');
@@ -233,9 +233,12 @@
   var cache = {};
 
   function legend(man) {
-    leg.innerHTML = '<span class="mm-key"><i class="mm-sw mm-sw-lo"></i>agree (' +
-      man.spread_lo_mm + ' mm)</span><span class="mm-key"><i class="mm-sw mm-sw-hi"></i>disagree (' +
-      man.spread_hi_mm + ' mm)</span><span class="mm-note-i">same input, same conditioning track &mdash; only the noise draw differs</span>';
+    leg.innerHTML = '<span class="mm-key"><i class="mm-sw mm-sw-lo"></i>low (' +
+      man.spread_lo_mm + ' mm)</span><span class="mm-key"><i class="mm-sw mm-sw-hi"></i>high (' +
+      man.spread_hi_mm + ' mm)</span><span class="mm-note-i">' + man.n_samples +
+      ' samples; ' + man.n_var + ' shown</span>';
+    leg.title = 'Mean x/y/z standard deviation of final positions across all samples, interpolated to visible points. ' +
+      'Colors span the 5th–95th percentiles across points. This is sample variation, not prediction error.';
   }
 
   function frame() {
